@@ -1,40 +1,63 @@
-import os
-# Since we cannot pull from GitHub directly via code without git installed or using external requests, 
-# let's write a python script to generate a beautiful, comprehensive README.md file structure based on a standard professional SistemHelpDeskIT project.
-# The user wants a README for "SistemHelpDeskIT". Let's create a template/detailed markdown file and save it.
+# 🛠️ Sistem Helpdesk Tiket IT (PNJ)
 
-readme_content = """# 🛠️ Sistem Help Desk IT
+Aplikasi console (CLI) sederhana berbasis **C++** untuk mengelola tiket keluhan IT — dibuat sebagai studi kasus implementasi struktur data: **Linked List**, **Queue (SLL)**, dan **Hash Table (chaining)**.
 
-Sistem informasi berbasis web yang dirancang untuk mengelola, melacak, dan menyelesaikan permintaan bantuan (ticketing) serta permasalahan teknis IT secara efisien dan terorganisir.
+## 📌 Fitur
 
-## 🚀 Fitur Utama
+| # | Fitur | Struktur Data |
+|---|-------|----------------|
+| 1 | Tambah tiket baru (keluhan user) | Linked List + Queue (enqueue) |
+| 2 | Tampilkan antrean tiket aktif | Queue |
+| 3 | Assign tiket ke teknisi | Hash Table (search) + Linked List |
+| 4 | Proses & selesaikan tiket berikutnya | Queue (dequeue) |
+| 5 | Tambah teknisi baru | Hash Table (insert + chaining) |
+| 6 | Cari teknisi by ID | Hash Table (search) |
+| 7 | Tampilkan seluruh riwayat tiket | Linked List (traversal) |
+| 0 | Keluar aplikasi | - |
 
-- **Manajemen Tiket (Ticketing System):** Pembuatan, pelacakan, dan pembaruan status tiket kendala IT (Open, In Progress, Resolved, Closed).
-- **Manajemen Pengguna & Peran (RBAC):**
-  - **Karyawan/User:** Melaporkan kendala dan melihat status tiket.
-  - **Teknisi/IT Support:** Menerima tiket, mengubah status, dan memberikan solusi.
-  - **Admin:** Mengelola data pengguna, kategori kendala, serta melihat laporan performa.
-- **Kategori Kendala:** Pengelompokan tiket berdasarkan tipe (Hardware, Software, Network, Akun/Akses).
-- **Skala Prioritas:** Penentuan tingkat urgensi tiket (Low, Medium, High, Critical) untuk optimasi penanganan.
-- **Notifikasi Real-time / Email:** Pemberitahuan otomatis saat ada pembaruan status tiket.
-- **Dashboard & Analitik:** Grafik visual perbandingan tiket masuk, selesai, dan performa SLA (Service Level Agreement) teknisi.
+## 🧠 Struktur Data yang Digunakan
 
-## 💻 Arsitektur & Teknologi
+- **`Tiket` (Linked List)** — menyimpan seluruh riwayat tiket (master data): id, nama pengguna, keluhan, status, dan teknisi yang ditugaskan.
+- **`Antrean` (Singly Linked List sebagai Queue)** — antrean FIFO tiket yang belum diproses, dengan operasi enqueue (tambah tiket) dan dequeue (proses tiket).
+- **`Teknisi` (Hash Table + Chaining)** — data teknisi disimpan di array hash berukuran 26 (berdasarkan huruf awal ID), dengan collision resolution memakai chaining (linked list per index).
 
-Kelola repositori ini menggunakan stack teknologi berikut (sesuaikan dengan implementasi Anda):
-- **Backend:** PHP (Laravel / CodeIgniter) ATAU Node.js (Express) / Python (Django)
-- **Frontend:** Blade Templating / React / Vue.js / Bootstrap / Tailwind CSS
-- **Database:** MySQL / PostgreSQL
-- **Autentikasi:** Session-based auth / JWT
+## 📂 Struktur File
 
-## 📋 Prasyarat Sistem
+```
+SistemHelpDeskIT/
+├── SistemHelpDeskSakha.cpp   # Source code utama
+├── .vscode/
+│   └── tasks.json            # Konfigurasi build task VS Code
+└── README.md
+```
 
-Sebelum menjalankan proyek ini secara lokal, pastikan Anda telah menginstal:
-- PHP >= 8.x / Node.js >= 16.x
-- Composer / NPM
-- MySQL Server
-- Web Server (Apache/Nginx) atau menggunakan built-in server
+## ⚙️ Cara Menjalankan
 
-## 🔧 Panduan Instalasi
+### Opsi 1 — g++ langsung
+```bash
+g++ SistemHelpDeskSakha.cpp -o SistemHelpDeskIT
+./SistemHelpDeskIT        # Linux/Mac
+SistemHelpDeskIT.exe      # Windows
+```
 
-1. **Kloning Repositori**
+### Opsi 2 — VS Code
+Buka folder ini di VS Code (sudah ada `tasks.json`), lalu jalankan build task bawaan (`Ctrl+Shift+B`) diikuti menjalankan file hasil kompilasi.
+
+## ▶️ Contoh Alur Pemakaian
+
+1. Pilih **5** untuk mendaftarkan teknisi (contoh: ID `t1`, nama, spesialisasi).
+2. Pilih **1** untuk membuat tiket baru dari keluhan user (otomatis masuk antrean).
+3. Pilih **2** untuk melihat antrean tiket yang masih aktif.
+4. Pilih **3** untuk assign tiket ke teknisi berdasarkan ID teknisi.
+5. Pilih **4** untuk memproses & menyelesaikan tiket paling depan di antrean.
+6. Pilih **7** kapan saja untuk melihat seluruh riwayat tiket di sistem.
+
+## 📝 Catatan
+
+- ID tiket dibuat otomatis (auto-increment, mulai dari `101`).
+- Fungsi hash memakai huruf pertama dari ID teknisi (case-insensitive), sehingga disarankan ID teknisi diawali huruf a–z.
+- Tiket yang belum di-assign teknisi tetap bisa diproses (opsi 4), namun statusnya akan tetap "Menunggu Teknisi" sampai di-assign.
+
+## 👤 Author
+
+Dibuat oleh [Sakhaika](https://github.com/Sakhaika) sebagai tugas/latihan mata kuliah Struktur Data.
